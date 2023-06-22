@@ -1,17 +1,17 @@
 exports.test = function(SQL, assert) {
 	//Node filesystem module - You know that.
-	var fs = require('fs');
+	let fs = require('fs');
 
 	//Ditto, path module
-	var path = require('path');
+	let path = require('path');
 
-	var filebuffer = fs.readFileSync(path.join(__dirname, 'test.sqlite'));
+	let filebuffer = fs.readFileSync(path.join(__dirname, 'test.sqlite'));
 
 	//Works
-	var db = new SQL.Database(filebuffer);
+	let db = new SQL.Database(filebuffer);
 
 	//[{"columns":["id","content"],"values":[["0","hello"],["1","world"]]}]
-	var res = db.exec("SELECT * FROM test WHERE id = 0");
+	let res = db.exec("SELECT * FROM test WHERE id = 0");
 	assert.deepEqual(res,
 									[{"columns":["id","content"],"values":[[0,"hello"]]}],
 									"One should be able to read the contents of an SQLite database file read from disk");
