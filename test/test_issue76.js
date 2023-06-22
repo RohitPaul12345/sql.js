@@ -1,8 +1,8 @@
 exports.test = function(sql, assert) {
 	// Create a database
-	var db = new sql.Database();
+	let db = new sql.Database();
 	// Ultra-simple query
-	var stmt = db.prepare("VALUES (?)");
+	let stmt = db.prepare("VALUES (?)");
 	// Bind null to the parameter and get the result
 	assert.deepEqual(stmt.get([null]), [null],
 			"binding a null value to a statement parameter");
