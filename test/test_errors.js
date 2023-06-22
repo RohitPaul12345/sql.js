@@ -1,17 +1,17 @@
 exports.test = function(sql, assert) {
 
   assert.throws(function(){
-    var db = new sql.Database([1,2,3]);
+    let db = new sql.Database([1,2,3]);
     db.exec("SELECT * FROM sqlite_master");
   },
                 /not a database/,
                 "Querying an invalid database should throw an error");
 
   // Create a database
-  var db = new sql.Database();
+  let db = new sql.Database();
 
   // Execute some sql
-  var res = db.exec("CREATE TABLE test (a INTEGER PRIMARY KEY, b, c, d, e);");
+ let res = db.exec("CREATE TABLE test (a INTEGER PRIMARY KEY, b, c, d, e);");
 
   assert.throws(function(){
     db.exec("I ain't be no valid sql ...");
@@ -26,7 +26,7 @@ exports.test = function(sql, assert) {
                 /UNIQUE constraint failed/,
                 "Inserting two rows with the same primary key should fail");
 
-  var stmt = db.prepare("INSERT INTO test (a) VALUES (?)");
+  let stmt = db.prepare("INSERT INTO test (a) VALUES (?)");
 
 
   assert.throws(function(){
