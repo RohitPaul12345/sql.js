@@ -1,6 +1,6 @@
 exports.test = function(sql, assert) {
   // Create a database
-  var db = new sql.Database();
+  let db = new sql.Database();
 
   db.run("CREATE TABLE test (data TEXT);");
 
