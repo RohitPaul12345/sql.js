@@ -1,6 +1,6 @@
 exports.test = function(sql, assert) {
     // Create a database
-    var db = new sql.Database();
+   let db = new sql.Database();
 
     // Execute some sql
     sqlstr = "CREATE TABLE COMPANY("+
@@ -26,8 +26,8 @@ exports.test = function(sql, assert) {
 "                  SELECT * FROM AUDIT;"+
 "                  INSERT INTO COMPANY VALUES (42,'B',8,'',1600);"+
 "                  SELECT EMP_ID FROM AUDIT ORDER BY EMP_ID";
-    var res = db.exec(sqlstr);
-    var expectedResult =  [
+    let res = db.exec(sqlstr);
+    let expectedResult =  [
     {
         columns : ['EMP_ID','ENTRY_DATE'],
         values : [
