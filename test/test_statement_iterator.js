@@ -1,21 +1,21 @@
 exports.test = function (SQL, assert) {
   // Create a database
-  var db = new SQL.Database();
+  let db = new SQL.Database();
 
   // Multiline SQL
-  var sqlstr = "CREATE TABLE test (x text, y integer);\n"
+  let sqlstr = "CREATE TABLE test (x text, y integer);\n"
     + "INSERT INTO test\n"
     + "VALUES ('hello', 42), ('goodbye', 17);\n"
     + "SELECT * FROM test;\n"
     + " -- nothing here";
-  var sqlstart = "CREATE TABLE test (x text, y integer);"
+  let sqlstart = "CREATE TABLE test (x text, y integer);"
 
   // Manual iteration
   // Get an iterator
-  var it = db.iterateStatements(sqlstr);
+  let it = db.iterateStatements(sqlstr);
 
   // Get first item
-  var x = it.next();
+  let x = it.next();
   assert.equal(x.done, false, "Valid iterator object produced");
   assert.equal(x.value.getSQL(), sqlstart, "Statement is for first query only");
   assert.equal(it.getRemainingSQL(), sqlstr.slice(sqlstart.length), "Remaining sql retrievable");
@@ -45,14 +45,14 @@ exports.test = function (SQL, assert) {
   db.run("DROP TABLE test;");
 
   // for...of
-  var count = 0;
+  let count = 0;
   for (let statement of db.iterateStatements(sqlstr)) {
     statement.step();
     count = count + 1;
   }
   assert.equal(count, 3, "For loop iterates correctly");
 
-  var badsql = "SELECT 1 as x;garbage in, garbage out";
+  let badsql = "SELECT 1 as x;garbage in, garbage out";
 
   // bad sql will stop iteration
   it = db.iterateStatements(badsql);
@@ -64,7 +64,7 @@ exports.test = function (SQL, assert) {
 
   // valid SQL executes, remaining SQL accessible after exception
   it = db.iterateStatements(badsql);
-  var remains = '';
+  let remains = '';
   try {
     for (let statement of it) {
       statement.step();
