@@ -3,9 +3,9 @@
 // Then we could do this:
 //const { Worker } = require('worker_threads');
 // But it turns out that the worker_threads interface is just different enough not to work.
-var puppeteer = require("puppeteer");
-var path = require("path");
-var fs = require("fs");
+let puppeteer = require("puppeteer");
+let path = require("path");
+let fs = require("fs");
 const { env } = require("process");
 
 class Worker {
@@ -63,16 +63,16 @@ class Worker {
 }
 
 exports.test = async function test(SQL, assert) {
-  var target = process.argv[2];
-  var file = target ? "sql-" + target : "sql-wasm";
+  let target = process.argv[2];
+  let file = target ? "sql-" + target : "sql-wasm";
   if (file.indexOf('wasm') > -1 || file.indexOf('memory-growth') > -1) {
     console.error("Skipping worker test for " + file + ". Not implemented yet");
     return;
   };
   // If we use puppeteer, we need to pass in this new cwd as the root of the file being loaded:
   const filename = "../dist/worker." + file + ".js";
-  var worker = await Worker.fromFile(path.join(__dirname, filename));
-  var data = await worker.postMessage({ id: 1, action: 'open' });
+  let worker = await Worker.fromFile(path.join(__dirname, filename));
+  let data = await worker.postMessage({ id: 1, action: 'open' });
   assert.strictEqual(data.id, 1, "Return the given id in the correct format");
   assert.deepEqual(data, { id: 1, ready: true }, 'Correct data answered to the "open" query');
 
@@ -99,10 +99,10 @@ exports.test = async function test(SQL, assert) {
   assert.strictEqual(data.id, 2, "Correct id");
   // debug error
   assert.strictEqual(data.error, undefined, data.error);
-  var results = data.results;
+  let results = data.results;
   assert.ok(Array.isArray(results), 'Correct result type');
   assert.strictEqual(results.length, 1, 'Expected exactly 1 table');
-  var table = results[0];
+  let table = results[0];
   assert.strictEqual(typeof table, 'object', 'Type of the returned table');
   assert.deepEqual(table.columns, ['num', 'str', 'hex'], 'Reading column names');
   assert.strictEqual(table.values[0][0], 1, 'Reading number');
@@ -116,8 +116,8 @@ exports.test = async function test(SQL, assert) {
   assert.deepEqual(obj2array(table.values[2][2]), [0x00, 0x44], 'Reading BLOB byte');
 
   data = await worker.postMessage({ action: 'export' });
-  var header = "SQLite format 3\0";
-  var actual = "";
+  let header = "SQLite format 3\0";
+  let actual = "";
   for (let i = 0; i < header.length; i++) actual += String.fromCharCode(data.buffer[i]);
   assert.equal(actual, header, 'Data returned is an SQLite database file');
 
@@ -129,8 +129,8 @@ exports.test = async function test(SQL, assert) {
 }
 
 function obj2array(obj) {
-  var buffer = []
-  for (var p in obj) { buffer[p] = obj[p] }
+  let buffer = []
+  for (let p in obj) { buffer[p] = obj[p] }
   return buffer;
 }
 
