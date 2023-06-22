@@ -1,18 +1,18 @@
 
 exports.test = function(sql, assert){
     // Create a database
-    var db = new sql.Database();
+    let db = new sql.Database();
 
     // Execute some sql
     sqlstr = "CREATE TABLE alphabet (letter, code);";
     db.exec(sqlstr);
 
-    var result = db.exec("SELECT name FROM sqlite_master WHERE type='table'");
+    let result = db.exec("SELECT name FROM sqlite_master WHERE type='table'");
     assert.deepEqual(result, [{columns:['name'], values:[['alphabet']]}],
                                     "Table properly created");
 
     // Prepare a statement to insert values in tha database
-    var stmt = db.prepare("INSERT INTO alphabet (letter,code) VALUES (?,?)");
+    let stmt = db.prepare("INSERT INTO alphabet (letter,code) VALUES (?,?)");
     // Execute the statement several times
     stmt.run(['a',1]);
     stmt.run(['b',2.2]);
@@ -30,7 +30,7 @@ exports.test = function(sql, assert){
     stmt = db.prepare("SELECT * FROM data");
     stmt.step(); // Run the statement
     assert.deepEqual(stmt.getColumnNames(), ['nbr','str','no_value'], 'Statement.GetColumnNames()');
-    var res = stmt.getAsObject();
+    let res = stmt.getAsObject();
     assert.strictEqual(res.nbr, 5, 'Read number');
     assert.strictEqual(res.str, '粵語😄', "Read string");
     assert.strictEqual(res.no_value, null, "Read null");
