@@ -1,5 +1,5 @@
 exports.test = function(SQL, assert){
-  var db = new SQL.Database();
+  let db = new SQL.Database();
   db.exec("CREATE TABLE test (data); INSERT INTO test VALUES ('Hello World');");
 
   // Simple function, appends extra text on a string.
@@ -11,8 +11,8 @@ exports.test = function(SQL, assert){
   db.create_function("TestFunction", test_function);
 
   // Use in a query, check expected result.
-  var result = db.exec("SELECT TestFunction(data) FROM test;");
-  var result_str = result[0]["values"][0][0];
+  let result = db.exec("SELECT TestFunction(data) FROM test;");
+  let result_str = result[0]["values"][0][0];
   assert.equal(result_str, "Function called with: Hello World", "Named functions can be registered");
 
   // 2 arg function, adds two ints together.
@@ -32,7 +32,7 @@ exports.test = function(SQL, assert){
 
   function test_zero_byte_index(data) {
     // Data is a Uint8Array
-    for (var i=0; i<data.length; i++) {
+    for (let i=0; i<data.length; i++) {
       if (data[i] === 0) {
         return i;
       }
@@ -53,7 +53,7 @@ exports.test = function(SQL, assert){
  
   // Test api support of different sqlite types and special values
   db.create_function("identityFunction", function (x) { return x;} );
-  var verbose=false;
+  let verbose=false;
   function canHandle(testData)
   {
     let result={};
