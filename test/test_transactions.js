@@ -1,5 +1,5 @@
 exports.test = function(SQL, assert){
-  var db = new SQL.Database();
+  let db = new SQL.Database();
   db.exec("CREATE TABLE test (data); INSERT INTO test VALUES (1);");
 
   // Open a transaction
@@ -11,8 +11,8 @@ exports.test = function(SQL, assert){
   // Rollback
   db.exec("ROLLBACK;");
 
-  var res = db.exec("SELECT data FROM test WHERE data = 4;");
-  var expectedResult =  [];
+  let res = db.exec("SELECT data FROM test WHERE data = 4;");
+  let expectedResult =  [];
   assert.deepEqual(res, expectedResult, "transaction rollbacks work");
 
   // Open a transaction
@@ -24,8 +24,8 @@ exports.test = function(SQL, assert){
   // Commit
   db.exec("COMMIT;");
 
-  var res = db.exec("SELECT data FROM test WHERE data = 4;");
-  var expectedResult =  [{
+  let res = db.exec("SELECT data FROM test WHERE data = 4;");
+  let expectedResult =  [{
     columns : ['data'],
     values : [
       [4]
@@ -42,8 +42,8 @@ exports.test = function(SQL, assert){
   // Rollback
   db.exec("ROLLBACK;");
 
-  var res = db.exec("SELECT data FROM test WHERE data IN (4,5);");
-  var expectedResult =  [{
+  let res = db.exec("SELECT data FROM test WHERE data IN (4,5);");
+  let expectedResult =  [{
     columns : ['data'],
     values : [
       [4]
